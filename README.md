@@ -1,0 +1,76 @@
+# Unity Project: HTC Vive Tracker Without Headset
+
+This Unity project enables you to use HTC Vive Trackers without an HMD (headset), by leveraging the SteamVR Null Driver.
+It allows you to assign trackers directly to objects in Unity, manage their configuration, and smooth their motion for stable tracking.
+
+## Prerequisites
+
+- OS: Windows 10/11 (Linux supported with SteamVR)
+- Unity: 2022.3 or newer
+- Steam: Download [here](https://store.steampowered.com/about/)
+- Steam VR: Install [here](https://store.steampowered.com/app/250820/SteamVR/)
+- Unity SteamVR-Utils package: Download [here](https://github.com/stex2005/SteamVR-Utils) if not available through git submodules.
+- Hardware: 
+	- 2+ HTC Vive Base Station
+	- 2+ HTC Vive VR Tracker
+- Null Driver for SteamVR (to bypass the headset requirement)
+
+## Features
+
+- Direct tracker-to-object binding: Assign HTC Vive trackers to Unity GameObjects in your scene.
+
+- Tracker identification in Unity: Manage trackers by name and serial number directly in the Inspector.
+
+- Relative pose tracking: Compute and apply tracker poses relative to a configurable reference tracker.
+
+- Motion smoothing: Use exponential smoothing to reduce jitter in both position and rotation.
+
+- Headset-free VR tracking: Run SteamVR with no HMD attached by using the Null Driver.
+
+## Additional Features
+
+- Tracker management: Assign logical roles (e.g., “Wrist”, “Hand” or “Reference”) to trackers and swap them dynamically.
+- Visualization: Debug view to show live tracker positions, orientations, and connection status in the Scene view.
+- Multi-tracker support: Supports multiple trackers active simultaneously.
+
+## Installation of Null Driver
+
+To run without an HMD, enable the Null Driver in SteamVR. You will need to edit two files, the `default.vrsettings` of the null driver, and the `default.vrsettings` of SteamVR.
+
+### Locate Config Files
+
+Both files are contained in your steam directory. Where that directory is depends on your operating system.
+
+- Windows: `C:\Program Files (x86)\Steam\` (unless Steam is installed elsewhere)
+
+- Linux: If installed from the homepage, at least on Ubuntu, it should be in `~/.local/share/Steam`, while the official package manger places it in `~/.steam`.
+
+### Null Driver Config
+
+The null driver file can be found in `*Steam Directory*/steamapps/common/SteamVR/drivers/null/resources/settings/default.vrsettings`.
+
+Open the null driver file and change `"enable": false,` to `"enable": true,`.
+
+### SteamVR Config 
+
+The second file, the SteamVR config file, can be found in `*Steam Directory*/steamapps/common/SteamVR/resources/settings/default.vrsettings`
+
+Change:
+- `"requireHmd": true,` to `"requireHmd": false,` 
+- `"forcedDriver": "",` to `"forcedDriver": "null",` 
+- `"activateMultipleDrivers": false,` to `"activateMultipleDrivers": true,`
+
+The new config should be:
+```
+"requireHmd": false,
+"forcedDriver": "null",
+"activateMultipleDrivers": true,
+```
+Notice that, like it says at the top of the file, this file will be replaced when SteamVR updates. If you want, you can place the settings in your `steamvr.vrsettings` file located somewhere in the Steam directory. Make sure you place them under the `steamvr` header.
+
+### Troubleshooting
+
+- SteamVR updates: Make sure you modify `/resources/settings/default.vrsettings` every time you update.
+Re-apply your Null Driver settings after updates, unless you’ve copied them to ``steamvr.vrsettings``.
+- Tracker not detected: Confirm base stations are powered and visible, and that SteamVR is running with Null Driver.
+- Jittery motion: Adjust the smoothing parameters in the Unity Inspector (positionSmoothSpeed, rotationSmoothSpeed).
