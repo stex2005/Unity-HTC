@@ -9,6 +9,7 @@ It allows you to assign trackers directly to objects in Unity, manage their conf
 - Unity: 2022.3 or newer
 - Steam: Download [here](https://store.steampowered.com/about/)
 - Steam VR: Install [here](https://store.steampowered.com/app/250820/SteamVR/)
+- Unity SteamVR Plugin: Download [here](https://assetstore.unity.com/packages/tools/integration/steamvr-plugin-32647) and follow [here](https://valvesoftware.github.io/steamvr_unity_plugin/articles/Quickstart.html)
 - Unity SteamVR-Utils package: Download [here](https://github.com/stex2005/SteamVR-Utils) if not available through git submodules.
 - Hardware: 
 	- 2+ HTC Vive Base Station
